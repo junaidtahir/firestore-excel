@@ -1,0 +1,108 @@
+ <!DOCTYPE html>
+<html>
+<head>
+	<!-- Basic Page Info -->
+	<meta charset="utf-8">
+	<title>Coordinator</title>
+
+	<!-- Site favicon -->
+	<link rel="icon" type="image/png" href="src/images/favicon.png">
+
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Firebase libraries -->
+	<!-- <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase.js"></script> -->
+	<script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-firestore.js"></script>
+	<!-- Custom sdk -->
+	<script src="firebase-sdk.js"></script>
+	<script src="xlsx.full.min.js"></script>
+	<script src="FileSaver.min.js"></script>
+	<!-- <script src="auth.js"></script> -->
+	<!-- <script src="myLayers.js"></script> -->
+	<script type="text/javascript">
+		function exportExcell(){
+			// console.log("user table: "+layerName);
+
+			var wb = XLSX.utils.book_new();
+			wb.Props = {
+				Title: "",
+				Subject: "phone numbers",
+				Author: "Hamad",
+				CreatedDate: new Date()
+			};
+			wb.SheetNames.push("phone numbers");
+			database.collection("authUsers").onSnapshot((snapshot) => {
+				var ws_data=[];
+
+				snapshot.forEach((doc) => {
+					var myObject=doc.data();
+					
+					 
+						// ws_data = [['Date' , 'Consultant Name','user','user Uid','price']];	
+						ws_data = [['User UID' , 'Phone No', 'Created At', 'Signed in']];	
+					
+					
+
+				});
+
+				snapshot.forEach((doc) => {
+					var myObject=doc.data();
+					
+					// if (myObject.parties) {
+					// var completeDate=myObject.date.date+"/"+myObject.date.month+"/"+myObject.date.year;
+					
+					// var consultantName=myObject.parties.consultant.name;
+					// var userName=myObject.parties.user.name;
+
+					// var userUid=myObject.parties.user.uid;
+					// ws_data.push([completeDate,consultantName,userName,userUid, myObject.price]);
+						
+					// }
+					if (myObject.phoneNumber) {
+						var userUid=myObject.localId;
+						var phoneNumber=myObject.phoneNumber;
+
+						var createdAt=myObject.createdAt;
+						createdAt=parseInt(createdAt);
+						createdAt=new Date(createdAt)
+						createdAt=createdAt.toLocaleString().split(",");
+
+						var lastSignedInAt=myObject.lastSignedInAt;
+						lastSignedInAt=parseInt(lastSignedInAt);
+						lastSignedInAt=new Date(lastSignedInAt)
+						lastSignedInAt=lastSignedInAt.toLocaleString().split(",");
+
+						ws_data.push([userUid, phoneNumber,createdAt[0], lastSignedInAt[0]]);
+					}
+					
+					
+				
+				});
+				console.log(ws_data);
+				var ws = XLSX.utils.aoa_to_sheet(ws_data);
+					
+				wb.Sheets["phone numbers"] = ws;
+
+				var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
+				function s2ab(s) {
+
+					var buf = new ArrayBuffer(s.length);
+					var view = new Uint8Array(buf);
+					for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+						return buf;
+
+				}
+				var filename="phone numbers.xlsx";
+				saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), filename);
+				
+			});
+		}
+	</script>
+</head>
+<body>	
+	<button onClick="exportExcell();">Click here to Excel export</button>
+</body>
+</html>
