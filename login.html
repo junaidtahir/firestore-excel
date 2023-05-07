@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Basic Page Info -->
+	<meta charset="utf-8">
+	<title>PerPlexing Puzzles - login</title>
+
+	<!-- Site favicon -->
+	<link rel="icon" type="image/png" href="src/images/favicon.png">
+
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Firebase libraries -->
+	<!-- <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase.js"></script> -->
+	<script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-firestore.js"></script>
+	<!-- Custom sdk -->
+	<script src="./firebase-sdk.js"></script>
+
+</head>
+
+<body>
+	<center>
+		<form id="sign_in" method="POST">
+			<div class="input-group custom">
+				<input type="text" id="username" value="junaidtahir22@yahoo.com" class="form-control form-control-lg"
+					placeholder="Username">
+				<div class="input-group-append custom">
+					<span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
+				</div>
+			</div>
+			<br />
+			<div class="input-group custom">
+				<input type="password" id="password" value="1234567" class="form-control form-control-lg"
+					placeholder="**********">
+				<div class="input-group-append custom">
+					<span class="input-group-text"><i class="dw dw-padlock1"></i></span>
+				</div>
+			</div>
+			<br />
+			<button class="btn btn-primary btn-lg btn-block" id="signin-btn">SIGN IN</button>
+		</form>
+	</center>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<script src="login.js"></script>
+</body>
+
+</html>

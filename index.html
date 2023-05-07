@@ -28,7 +28,7 @@
 			wb.Props = {
 				Title: "",
 				Subject: "Logs",
-				Author: "Hamad",
+				Author: "Junaid Tahir",
 				CreatedDate: new Date()
 			};
 			wb.SheetNames.push("Logs");
@@ -42,7 +42,10 @@
 
 				snapshot.forEach((doc) => {
 					var myObject=doc.data();
-					ws_data.push([Date(myObject.creationTime), Date(myObject.lastActive),Date(myObject.lastSignInTime), doc.id]);
+					let creationTime = new Date(myObject.creationTime.seconds * 1000)
+					let lastActive = new Date(myObject.lastActive.seconds * 1000)
+					let lastSignInTime = new Date(myObject.lastSignInTime.seconds * 1000)
+					ws_data.push([creationTime.toGMTString(), lastActive.toGMTString(), lastSignInTime.toGMTString(), doc.id]);
 				});
 				console.log(ws_data);
 				var ws = XLSX.utils.aoa_to_sheet(ws_data);
@@ -68,6 +71,11 @@
 <body>
 	<center>	
 		<button onClick="exportExcell();">Click here to export Excel</button>
+		<br />
+		<br />
+		<a style="cursor: pointer;color: blue;" onclick="firebase.auth().signOut();">Logout</a>
 	</center>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<script src="auth.js"></script>
 </body>
 </html>
