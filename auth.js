@@ -15,9 +15,9 @@ function initApp() {
       var today = new Date();
 
 
-      if (email != "alpburak@hotmail.com") {
-        firebase.auth().signOut();
-      }
+      // if (email != "alpburak@hotmail.com") {
+      //   firebase.auth().signOut();
+      // }
     }
 
     else {

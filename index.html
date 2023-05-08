@@ -45,6 +45,15 @@
 					let creationTime = new Date(myObject.creationTime.seconds * 1000)
 					let lastActive = new Date(myObject.lastActive.seconds * 1000)
 					let lastSignInTime = new Date(myObject.lastSignInTime.seconds * 1000)
+					let email;
+					let phone;
+					if (myObject.phone != "NA") {
+						console.log(myObject.phone)
+					}
+					if (myObject.email != "NA") {
+						console.log(myObject.email)
+					}
+
 					ws_data.push([creationTime.toGMTString(), lastActive.toGMTString(), lastSignInTime.toGMTString(), doc.id]);
 				});
 				console.log(ws_data);
